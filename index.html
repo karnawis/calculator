@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Converter</title>
+    <style>
+      /*
+      * Base structure
+      */
+
+      html,
+      body {
+        height: 100%;
+        background-color: #333;
+      }
+
+      body {
+        display: -ms-flexbox;
+        display: flex;
+        color: #fff;
+        text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+        box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+      }
+      h4 span {
+        color: black;
+      }
+
+      .cover-container {
+        max-width: 42em;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="display-4 text-center mt-5 mb-5">Converter</h1>
+          <form class="form-group">
+            <input id="input" type="number" class="form-control form-control-lg bg-warning" placeholder="Enter here in meters..">
+          </form>
+          <div id="output-block">
+            <div class="card output-blocks__grams mb-2 bg-warning">
+              <div class="card-body">
+                <h4 class="card-title">Grams: <span id="output-grams"></span></h4>
+              </div>
+            </div>
+            <div class="card output-blocks__grams mb-2 bg-success">
+              <div class="card-body">
+                <h4 class="card-title">kilograms: <span id="output-kilograms"></span></h4>
+              </div>
+            </div>
+            <div class="card output-blocks__grams mb-3 bg-info">
+              <div class="card-body">
+                <h4 class="card-title">Ounces: <span id="output-ounces"></span></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.getElementById('input').addEventListener('input', (e) => {
+        let val = e.target.value;
+        console.log(val);
+        document.getElementById('output-grams').innerHTML = val;
+        document.getElementById('output-ounces').innerHTML = val;
+        document.getElementById('output-kilograms').innerHTML = val;
+
+        
+      })
+    </script>
+</body>
+</html>
