@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Converter</title>
+    <title>BMI Calculator</title>
     <style>
       /*
       * Base structure
@@ -23,9 +23,6 @@
         text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
         box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
       }
-      h4 span {
-        color: black;
-      }
 
       .cover-container {
         max-width: 42em;
@@ -37,24 +34,33 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="display-4 text-center mt-5 mb-5">Converter</h1>
+          <h1 class="display-4 text-center mt-5 mb-5">BMI Calculator</h1>
           <form class="form-group">
-            <input id="input" type="number" class="form-control form-control-lg bg-warning" placeholder="Enter here in meters..">
-          </form>
-          <div id="output-block">
             <div class="card output-blocks__grams mb-2 bg-warning">
               <div class="card-body">
-                <h4 class="card-title">Grams: <span id="output-grams"></span></h4>
+               <input id="input-weight" type="number" name="weight" size="10" class="form-control form-control-lg" placeholder="Enter your weight in kg">
+               <select type="multiple" id="weightunits"  class="form-control">
+                <option value="kg" selected="selected">kilograms</option>
+                <option value="lb">pounds</option>
+            </select>
               </div>
             </div>
-            <div class="card output-blocks__grams mb-2 bg-success">
+            <div class="card output-blocks__grams mb-2 bg-primary">
               <div class="card-body">
-                <h4 class="card-title">kilograms: <span id="output-kilograms"></span></h4>
+                <input id="input-height" type="number" name="height" size="10" class="form-control form-control-lg" placeholder="Enter your height in cm">
+                <select type="multiple" id="heightunits" class="form-control">
+                  <option value="metres" selected="selected">metres</option>
+                  <option value="inches">inches</option>
+              </select>
               </div>
             </div>
-            <div class="card output-blocks__grams mb-3 bg-info">
+            <input type="button" value="Calculate BMI" id="btn-bmi" class="btn btn-success btn-lg"/>
+            <input type="reset" value="Reset" class="btn btn-success btn-lg" id="btn-reset"/>
+          </form>
+          <div id="output-block">
+            <div class="card output-blocks__grams mb-2 bg-info">
               <div class="card-body">
-                <h4 class="card-title">Ounces: <span id="output-ounces"></span></h4>
+                <h4 class="card-title">Result: <span id="output"></span></h4>
               </div>
             </div>
           </div>
@@ -62,13 +68,43 @@
       </div>
     </div>
     <script>
-      document.getElementById('input').addEventListener('input', (e) => {
-        let val = e.target.value;
-        console.log(val);
-        document.getElementById('output-grams').innerHTML = val;
-        document.getElementById('output-ounces').innerHTML = val;
-        document.getElementById('output-kilograms').innerHTML = val;
+      document.getElementById('output-block').style.visibility = "hidden";
 
+      document.getElementById('btn-reset').addEventListener('click', (e) => {
+        //e.preventDefault();
+        document.getElementById('output-block').style.visibility = "hidden";
+      });
+
+      document.getElementById('btn-bmi').addEventListener('click', (e) => {
+        let val = e.target.value;
+        let weight =  document.getElementById('input-weight').value;
+        let height =  document.getElementById('input-height').value;
+        let heightunits = document.getElementById("heightunits").value;
+        let weightunits = document.getElementById("weightunits").value;
+
+        if (heightunits == "inches") { height =  height/39.3700787;}
+        if (weightunits == "lb") {weight = weight/2.20462;}
+
+        let bmi = weight/(height/100*height/100);
+
+        if(weight > 0 && height > 0){	
+          document.getElementById('output-block').style.visibility = "visible";
+          bmi = Math.round(bmi);
+          let bmiMeaning = '';
+          if(bmi < 18.5){
+            bmiMeaning = "thin"
+          } 
+          if(bmi > 18.5 && bmi < 25){
+            bmiMeaning = "healthy"
+          }
+          if(bmi > 25){
+            bmiMeaning = "overweight"
+          }
+
+          console.log(val, weight, height);
+
+          document.getElementById('output').innerHTML = `Your BMI is ${bmi} that means your BMI level is ${bmiMeaning}`;
+        }
         
       })
     </script>
